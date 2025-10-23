@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Periodic Studio — Interactive Periodic Table</title>
+  <meta name="description" content="Interactive animated periodic table with 3D atom viewer." />
+  <link rel="stylesheet" href="style.css" />
+  <!-- three.js CDN -->
+  <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div class="page">
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="brand-mark" id="brandMark">P</div>
+          <div class="brand-text">Periodic <span>Studio</span></div>
+        </div>
+
+        <nav id="navLinks" class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#table">Table</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <button id="menuBtn" class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+          <svg viewBox="0 0 100 80" width="28" height="22"><rect width="100" height="12" rx="6"></rect><rect y="30" width="100" height="12" rx="6"></rect><rect y="60" width="100" height="12" rx="6"></rect></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="mobileNav" class="mobile-nav" aria-hidden="true">
+      <a href="#home">Home</a>
+      <a href="#table">Table</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="hero-left">
+        <h1 class="hero-title">
+          <span class="line">Periodic</span>
+          <span class="line highlight">Studio</span>
+        </h1>
+        <p class="hero-sub">Explore the elements — animated explanations, 3D atom viewer and smart search/filter. Science, made delightful.</p>
+
+        <div class="controls">
+          <input id="search" type="search" placeholder="Search by name, symbol or number..." />
+          <select id="filterCategory">
+            <option value="all">All Categories</option>
+            <option value="nonmetal">Nonmetal</option>
+            <option value="noble gas">Noble gas</option>
+            <option value="alkali metal">Alkali metal</option>
+            <option value="alkaline earth metal">Alkaline earth metal</option>
+            <option value="metalloid">Metalloid</option>
+            <option value="transition metal">Transition metal</option>
+            <option value="post-transition metal">Post-transition metal</option>
+            <option value="halogen">Halogen</option>
+            <option value="lanthanoid">Lanthanoid</option>
+            <option value="actinoid">Actinoid</option>
+          </select>
+          <button id="resetBtn" class="btn">Reset</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div id="threeWrap" class="three-wrap" aria-hidden="true"></div>
+        <div class="atom-note">Click any element to open details & 3D atom</div>
+      </div>
+    </section>
+
+    <!-- TABLE -->
+    <section id="table" class="section table-section">
+      <div class="container">
+        <h2 class="section-title">Interactive Periodic Table</h2>
+        <div id="tableGrid" class="table-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ELEMENT MODAL -->
+    <div id="elementModal" class="video-modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="video-inner element-inner">
+        <button id="modalClose" class="modal-close" aria-label="Close">✕</button>
+        <div class="element-top">
+          <div class="element-3d" id="element3d"></div>
+          <div class="element-meta">
+            <div class="el-number" id="elNumber"></div>
+            <div class="el-symbol" id="elSymbol"></div>
+            <div class="el-name" id="elName"></div>
+            <div class="el-mass" id="elMass"></div>
+            <div class="el-category" id="elCategory"></div>
+          </div>
+        </div>
+        <div class="element-body">
+          <h4>Electron Configuration</h4>
+          <div id="elConfig" class="mono"></div>
+
+          <h4>Summary</h4>
+          <p id="elSummary"></p>
+
+          <div class="el-attr">
+            <div><strong>Group:</strong> <span id="elGroup"></span></div>
+            <div><strong>Period:</strong> <span id="elPeriod"></span></div>
+            <div><strong>Oxidation:</strong> <span id="elOx"></span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about">
+      <div class="container about-grid">
+        <div>
+          <h2 class="section-title">About This Project</h2>
+          <p>This animated periodic table is built for learning and presentation. Click elements to open the 3D atom view, filter by category or search instantly. Designed to be responsive and deploy-ready.</p>
+        </div>
+        <div class="about-visual">
+          <img src="https://picsum.photos/480/320?grayscale" alt="Lab" />
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="container contact-grid">
+        <div>
+          <h2 class="section-title">Contact</h2>
+          <p>Feedback, corrections or requests — reach out.</p>
+          <div class="contact-info">
+            <div><strong>Email:</strong> hello@periodic.studio</div>
+          </div>
+        </div>
+
+        <form id="contactForm" class="contact-form" aria-label="Contact form">
+          <input id="cname" type="text" placeholder="Name" required />
+          <input id="cemail" type="email" placeholder="Email" required />
+          <textarea id="cmessage" rows="4" placeholder="Message" required></textarea>
+          <div class="form-row">
+            <button type="submit" class="btn btn-primary">Send</button>
+            <div class="small-note">No backend — frontend demo only</div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> Periodic Studio</div>
+      <div class="socials"><a href="#">IG</a><a href="#">YT</a><a href="#">LI</a></div>
+    </footer>
+  </div>
+</body>
+</html>
